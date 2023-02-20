@@ -5,6 +5,7 @@ class Song(models.Model):
     artist = models.CharField(max_length=200)
     static_url = models.URLField(blank=True, null=True)
     energy = models.IntegerField(default=0)
+    mood = models.CharField(max_length=100, default="middle")
     tempo = models.IntegerField(default=50)
     playable = models.BooleanField(default=False)
     
