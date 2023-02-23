@@ -20,6 +20,7 @@ def create_mock_song(i):
         static_url="",
         energy=random.randint(0, 100),
         tempo=random.randint(50,150),
+        mood=random.choice(['sad', 'middle', 'happy']),
         playable=True
     )
 

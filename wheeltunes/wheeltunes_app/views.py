@@ -5,7 +5,6 @@ from wheeltunes_app.forms import UploadSongForm
 
 # Create your views here.
 def index(request):
-
     if request.method =="POST":
         form = UploadSongForm(request.POST, request.FILES)
         if form.is_valid():
@@ -21,3 +20,8 @@ def index(request):
 
 
     return render(request, 'wheeltunes_app/index.html', context=context)
+
+
+def sliders(request):
+    context_dict = {}
+    return render(request, 'wheeltunes_app/sliders_determine_song.html', context=context_dict)
