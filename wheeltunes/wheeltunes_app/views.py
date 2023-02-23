@@ -9,8 +9,6 @@ def index(request):
     if request.method =="POST":
         sensor = SensorData.objects.all().first()
         mood = list(request.POST.keys())[1]
-        print(mood)
-
         if sensor:
             sensor.mood = mood
             sensor.save()
