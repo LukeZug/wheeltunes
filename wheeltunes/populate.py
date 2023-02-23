@@ -7,7 +7,7 @@ django.setup()
 from wheeltunes_app.models import *
 import random
 
-NUM_OF_SONGS = 20
+NUM_OF_SONGS = 100
 
 def populate():
     for i in range(NUM_OF_SONGS):
