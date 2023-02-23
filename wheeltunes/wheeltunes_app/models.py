@@ -17,3 +17,4 @@ class SensorData(models.Model):
     heart_rate = models.IntegerField(default=40)
     speed = models.IntegerField(default=0)
     background_noise = models.IntegerField(default=20)
+    mood = models.CharField(max_length=100, default='')

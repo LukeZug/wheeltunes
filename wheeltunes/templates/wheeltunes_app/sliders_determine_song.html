@@ -9,17 +9,20 @@
         <div class="row">
             <div class="col">
                 <label for="customRange2" class="form-label">Speed (0-40mph)</label>
-                <input type="range" class="form-range" min="0" max="40" id="customRange2" name="speed">
+                <input type="range" class="form-range" id="speed_input" min="0" max="40" name="speed" oninput="speed_output.value = speed_input.value">
+                <output for="customRange2" id="speed_output" class="form-label">20</output>
             </div>
 
             <div class="col">
                 <label for="customRange2" class="form-label">Heart Rate (40-150bpm)</label>
-                <input type="range" class="form-range" min="40" max="150" id="customRange2" name="heart-rate">
+                <input type="range" class="form-range" min="40" max="150" name="heart-rate" id="HR_input" oninput="HR_output.value = HR_input.value">
+                <output for="customRange2" id="HR_output" class="form-label">95</output>
             </div>
 
             <div class="col">
                 <label for="customRange2" class="form-label">Background Noise (0-80db)</label>
-                <input type="range" class="form-range" min="0" max="80" id="customRange2" name="background-noise">
+                <input type="range" class="form-range" min="0" max="80" name="background-noise" id="BN_input" oninput="BN_output.value = BN_input.value">
+                <output for="customRange2" id="BN_output" class="form-label">40</output>
             </div>
         </div>
 
@@ -32,7 +35,7 @@
     {% endif %}
     <ul>
     {% for song in playable_songs %}
-        <li>{{ song.title }} by {{ song.artist }} - ({{ song.tempo }} bpm)</li>
+        <li> {{ song }}</li>
     {% endfor %}
     </ul>
 </div>

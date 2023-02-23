@@ -7,18 +7,19 @@ from wheeltunes_app.forms import UploadSongForm
 # Create your views here.
 def index(request):
     if request.method =="POST":
-        form = UploadSongForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('index')
-        else:
-            print(form.errors)
-    else:
-        form = UploadSongForm()
+        sensor = SensorData.objects.all().first()
+        mood = list(request.POST.keys())[1]
+        print(mood)
 
-    songs = Song.objects.all()
-    context = {'songs': songs, 'form': form}
-    return render(request, 'wheeltunes_app/index.html', context=context)
+        if sensor:
+            sensor.mood = mood
+            sensor.save()
+        else:
+            SensorData.objects.create(mood=mood)
+
+        return redirect(reverse('sliders'))
+    
+    return render(request, 'wheeltunes_app/index.html')
 
 
 def sliders(request):
@@ -53,6 +54,8 @@ def sliders(request):
                 tempo__gte=heart_rate-TEMPO_HEART_RATE_OFFSET
             ).filter(
                 tempo__lte=heart_rate+TEMPO_HEART_RATE_OFFSET
+            ).filter(
+                mood=sensor_data.mood
             )
 
         context_dict = {
