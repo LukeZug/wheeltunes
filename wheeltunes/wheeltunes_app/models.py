@@ -13,3 +13,7 @@ class Song(models.Model):
         return f"{self.title} -> Energy: {self.energy} -> Tempo: {self.tempo} BPM -> Mood: {self.mood}"
     
 
+class SensorData(models.Model):
+    heart_rate = models.IntegerField(default=40)
+    speed = models.IntegerField(default=0)
+    background_noise = models.IntegerField(default=20)

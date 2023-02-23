@@ -25,5 +25,12 @@
 
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
+
+    <h2>Songs most suited to current state:</h2>
+    <ul>
+    {% for song in playable_songs %}
+        <li>{{ song.title }} by {{ song.artist }} - ({{ song.tempo }} bpm)</li>
+    {% endfor %}
+    </ul>
 </div>
 {% endblock %}
