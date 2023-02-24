@@ -60,6 +60,8 @@ def sliders(request):
         context_dict = {
             'playable_songs': songs_linked_to_heart_rate,
             'sensor_data': sensor_data,
+            'lower_offset': sensor_data.heart_rate - TEMPO_HEART_RATE_LOWER_OFFSET,
+            'upper_offset': sensor_data.heart_rate + TEMPO_HEART_RATE_UPPER_OFFSET,
         }
         return render(request, 'wheeltunes_app/sliders_determine_song.html', context=context_dict)
 
