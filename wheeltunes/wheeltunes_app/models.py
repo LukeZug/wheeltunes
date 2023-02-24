@@ -10,7 +10,7 @@ class Song(models.Model):
     playable = models.BooleanField(default=False)
     
     def __str__(self):
-        return f"{self.title} -> Energy: {self.energy} -> Tempo: {self.tempo} BPM -> Mood: {self.mood}"
+        return f"{self.title} -> Energy: {self.energy} -> Tempo: {self.tempo} BPM -> Mood: {self.mood} -> url: {self.static_url}"
     
 
 class SensorData(models.Model):
