@@ -31,7 +31,7 @@
 
     <h2>Songs most suited to current state:</h2>
     {% if sensor_data %}
-        <p>Current sensor data: {{ sensor_data.heart_rate }}bpm, {{ sensor_data.speed }}mph, {{ sensor_data.background_noise }}db</p>
+        <p>Current sensor data: {{ sensor_data.heart_rate }}bpm, {{ sensor_data.speed }}mph, {{ sensor_data.background_noise }}db, {% if sensor_data.mood %}mood: {{ sensor_data.mood }}{% endif %}</p>
     {% endif %}
     <ul>
     {% for song in playable_songs %}
