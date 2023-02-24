@@ -46,12 +46,13 @@ def sliders(request):
 
         if sensor_data:
             # Get songs with tempo (+/-) 10bpm (or whatever specified) of the user heart rate.
-            TEMPO_HEART_RATE_OFFSET = 10
+            TEMPO_HEART_RATE_LOWER_OFFSET, TEMPO_HEART_RATE_UPPER_OFFSET = choose_offsets(sensor_data.speed)
+
             heart_rate = sensor_data.heart_rate
             songs_linked_to_heart_rate = songs.filter(
-                tempo__gte=heart_rate-TEMPO_HEART_RATE_OFFSET
+                tempo__gte=heart_rate-TEMPO_HEART_RATE_LOWER_OFFSET
             ).filter(
-                tempo__lte=heart_rate+TEMPO_HEART_RATE_OFFSET
+                tempo__lte=heart_rate+TEMPO_HEART_RATE_UPPER_OFFSET
             ).filter(
                 mood=sensor_data.mood
             )
@@ -61,3 +62,23 @@ def sliders(request):
             'sensor_data': sensor_data,
         }
         return render(request, 'wheeltunes_app/sliders_determine_song.html', context=context_dict)
+
+
+def choose_offsets(current_speed):
+    # Given a speed, determine how much the songs can vary from the heart rate.
+    # Lower speed => songs with tempo quite a bit lower than heart rate are allowed
+    # Higher speed => songs with quite a bit higher tempo than HR are allowed
+
+    upper_offset = lower_offset = 10
+    if 0 <= current_speed <= 10:
+        # Cycling up to 10mph -- despite HR, it's a slow cycle so allow for larger range of slower tempo songs.
+        lower_offser = 30
+    elif 10 < current_speed <= 20:
+        # Cycling between 10 and 20mph, faster cycle so reduce number of slower songs played.
+        lower_offser = 10
+    else:
+        # Cycling over 20mph -- very fast, so allow for a larger range of higher BPM songs.
+        upper_offset = 30
+        lower_offser = 10  # incase they got to this speed between updates
+
+    return lower_offser, upper_offset
