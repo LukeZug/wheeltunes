@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.http import JsonResponse
 from wheeltunes_app.models import *
 from wheeltunes_app.forms import UploadSongForm
 
@@ -36,33 +37,19 @@ def sliders(request):
         else:
             SensorData.objects.create(heart_rate=heart_rate, speed=speed, background_noise=background_noise)
 
-        return redirect(reverse('sliders'))
+        data = generate_sliders_page()
+
+        data['sensor_data'] = {
+            'speed': data.get('sensor_data').speed,
+            'heart_rate': data.get('sensor_data').heart_rate,
+            'background_noise': data.get('sensor_data').background_noise,
+        }
+
+        return JsonResponse(data)
     else:
         # If we have sensor data (and songs), then pick the songs in a way where
         # songs are most aligned with the users' heart rate, speed, and background noise.
-
-        sensor_data = SensorData.objects.all().first()
-        songs = songs_linked_to_heart_rate = Song.objects.all()
-
-        if sensor_data:
-            # Get songs with tempo (+/-) 10bpm (or whatever specified) of the user heart rate.
-            TEMPO_HEART_RATE_LOWER_OFFSET, TEMPO_HEART_RATE_UPPER_OFFSET = choose_offsets(sensor_data.speed)
-
-            heart_rate = sensor_data.heart_rate
-            songs_linked_to_heart_rate = songs.filter(
-                tempo__gte=heart_rate-TEMPO_HEART_RATE_LOWER_OFFSET
-            ).filter(
-                tempo__lte=heart_rate+TEMPO_HEART_RATE_UPPER_OFFSET
-            ).filter(
-                mood=sensor_data.mood
-            )
-
-        context_dict = {
-            'playable_songs': songs_linked_to_heart_rate,
-            'sensor_data': sensor_data,
-            'lower_offset': sensor_data.heart_rate - TEMPO_HEART_RATE_LOWER_OFFSET,
-            'upper_offset': sensor_data.heart_rate + TEMPO_HEART_RATE_UPPER_OFFSET,
-        }
+        context_dict = generate_sliders_page()
         return render(request, 'wheeltunes_app/sliders_determine_song.html', context=context_dict)
 
 
@@ -84,3 +71,28 @@ def choose_offsets(current_speed):
         lower_offser = 10  # incase they got to this speed between updates
 
     return lower_offser, upper_offset
+
+
+def generate_sliders_page():
+    sensor_data = SensorData.objects.all().first()
+    songs = songs_linked_to_heart_rate = Song.objects.all()
+
+    if sensor_data:
+        # Get songs with tempo (+/-) 10bpm (or whatever specified) of the user heart rate.
+        TEMPO_HEART_RATE_LOWER_OFFSET, TEMPO_HEART_RATE_UPPER_OFFSET = choose_offsets(sensor_data.speed)
+
+        heart_rate = sensor_data.heart_rate
+        songs_linked_to_heart_rate = songs.filter(
+            tempo__gte=heart_rate-TEMPO_HEART_RATE_LOWER_OFFSET
+        ).filter(
+            tempo__lte=heart_rate+TEMPO_HEART_RATE_UPPER_OFFSET
+        ).filter(
+            mood=sensor_data.mood
+        )
+
+    return {
+        'playable_songs': [str(song) for song in list(songs_linked_to_heart_rate)],
+        'sensor_data': sensor_data,
+        'lower_offset': sensor_data.heart_rate - TEMPO_HEART_RATE_LOWER_OFFSET,
+        'upper_offset': sensor_data.heart_rate + TEMPO_HEART_RATE_UPPER_OFFSET,
+    }

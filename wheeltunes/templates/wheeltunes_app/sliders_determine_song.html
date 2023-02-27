@@ -31,10 +31,10 @@
 
     <h2>Songs most suited to current state:</h2>
     {% if sensor_data %}
-        <p>Current sensor data: {{ sensor_data.heart_rate }}bpm, {{ sensor_data.speed }}mph, {{ sensor_data.background_noise }}db, {% if sensor_data.mood %}mood: {{ sensor_data.mood }}{% endif %}</p>
-        <p>Showing songs with tempo range <strong>{{ lower_offset }}bpm</strong> to <strong>{{ upper_offset }}bpm</strong></p>
+        <p>Current sensor data: <span id="hr">{{ sensor_data.heart_rate }}</span>bpm, <span id="speed_sensor">{{ sensor_data.speed }}</span>mph, <span id="bg_noise">{{ sensor_data.background_noise }}</span>db, {% if sensor_data.mood %}mood: {{ sensor_data.mood }}{% endif %}</p>
+        <p>Showing songs with tempo range <strong><span id="lower_offset">{{ lower_offset }}</span>bpm</strong> to <strong><span id="upper_offset">{{ upper_offset }}</span>bpm</strong></p>
     {% endif %}
-    <ul>
+    <ul id="playlist">
     {% for song in playable_songs %}
         <li>{{ song }}</li>
     {% endfor %}
