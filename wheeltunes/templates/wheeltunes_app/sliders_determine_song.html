@@ -1,34 +1,38 @@
 {% extends "wheeltunes_app/base.html" %}
 {% block body_block %}
 
-<h1>Determine Songs via (mocked) sensor input</h1>
+    <div class="container">
+        <div id="mockers">
+        <form action="#" method="POST">
+            {% csrf_token %}
+            <div class="row">
 
-<div class="container">
-    <form action="#" method="POST">
-        {% csrf_token %}
-        <div class="row">
-            <div class="col">
-                <label for="customRange2" class="form-label">Speed (0-40mph)</label>
-                <input type="range" class="form-range" id="speed_input" min="0" max="40" name="speed" value="{%if sensor_data%}{{sensor_data.speed}}{%else%}0{%endif%}" oninput="speed_output.value = speed_input.value">
-                <output for="customRange2" id="speed_output" class="form-label">{%if sensor_data%}{{sensor_data.speed}}{%else%}0{%endif%}</output>
+                <h1>Mocked sensor input:</h1>
+
+                <div class="col">
+                    <label for="customRange2" class="form-label">Speed (0-40mph)</label>
+                    <input type="range" class="form-range" id="speed_input" min="0" max="40" name="speed" value="{%if sensor_data%}{{sensor_data.speed}}{%else%}0{%endif%}" oninput="speed_output.value = speed_input.value">
+                    <output for="customRange2" id="speed_output" class="form-label">{%if sensor_data%}{{sensor_data.speed}}{%else%}0{%endif%}</output>
+                </div>
+
+                <div class="col">
+                    <label for="customRange2" class="form-label">Heart Rate (40-150bpm)</label>
+                    <input type="range" class="form-range" min="40" max="150" name="heart-rate" id="HR_input" oninput="HR_output.value = HR_input.value" value="{%if sensor_data%}{{sensor_data.heart_rate}}{%else%}0{%endif%}">
+                    <output for="customRange2" id="HR_output" class="form-label">{%if sensor_data%}{{sensor_data.heart_rate}}{%else%}40{%endif%}</output>
+                </div>
+
+                <div class="col">
+                    <label for="customRange2" class="form-label">Background Noise (0-80db)</label>
+                    <input type="range" class="form-range" min="0" max="80" name="background-noise" id="BN_input" oninput="BN_output.value = BN_input.value" value="{%if sensor_data%}{{sensor_data.background_noise}}{%else%}0{%endif%}">
+                    <output for="customRange2" id="BN_output" class="form-label">{%if sensor_data%}{{sensor_data.background_noise}}{%else%}0{%endif%}</output>
+                </div>
             </div>
 
-            <div class="col">
-                <label for="customRange2" class="form-label">Heart Rate (40-150bpm)</label>
-                <input type="range" class="form-range" min="40" max="150" name="heart-rate" id="HR_input" oninput="HR_output.value = HR_input.value" value="{%if sensor_data%}{{sensor_data.heart_rate}}{%else%}0{%endif%}">
-                <output for="customRange2" id="HR_output" class="form-label">{%if sensor_data%}{{sensor_data.heart_rate}}{%else%}40{%endif%}</output>
-            </div>
-
-            <div class="col">
-                <label for="customRange2" class="form-label">Background Noise (0-80db)</label>
-                <input type="range" class="form-range" min="0" max="80" name="background-noise" id="BN_input" oninput="BN_output.value = BN_input.value" value="{%if sensor_data%}{{sensor_data.background_noise}}{%else%}0{%endif%}">
-                <output for="customRange2" id="BN_output" class="form-label">{%if sensor_data%}{{sensor_data.background_noise}}{%else%}0{%endif%}</output>
-            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
         </div>
 
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-
+        <div id="changes">
     <h2>Songs most suited to current state:</h2>
     {% if sensor_data %}
         <p>Current sensor data: <span id="hr">{{ sensor_data.heart_rate }}</span>bpm, <span id="speed_sensor">{{ sensor_data.speed }}</span>mph, <span id="bg_noise">{{ sensor_data.background_noise }}</span>db, {% if sensor_data.mood %}mood: {{ sensor_data.mood }}{% endif %}</p>
@@ -39,5 +43,14 @@
         <li>{{ song }}</li>
     {% endfor %}
     </ul>
-</div>
+    </div>
+    </div>
+
+    <style>
+        #mockers{
+            padding-top: 20px;
+        }
+
+    </style>
+
 {% endblock %}
