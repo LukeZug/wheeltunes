@@ -4,23 +4,41 @@
 {% block body_block %}
     <h1>WHEELTUNES!</h1>
 
-    <h2>Upload a song</h2>
-    <p>Once we have a bunch of songs in the database we won't need this, it won't be in the final thing</p>
-    <form id="song_form" method="post" action="" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" name="submit" value="Submit" />
-    </form>
+    <div id="watch-screen">
+        <div id="faces">
+            <h4>How are you feeling today?</h4>
+            <form action="" id="mood-form" method="POST">
+                {% csrf_token %}
+                <button type="submit" name="happy" class="btn btn-primary" id="face-btn"><i id="emoji" class="bi bi-emoji-smile-fill"></i></button>
+                <button type="submit" name="middle" class="btn btn-primary" id="face-btn"><i id="emoji" class="bi bi-emoji-neutral-fill"></i></button>
+                <button type="submit" name="sad" class="btn btn-primary" id="face-btn"><i id="emoji" class="bi bi-emoji-frown-fill"></i></button>
+            </form>
+            
+        </div>
+    </div>
 
-    {% if songs %}
-        <h2>Songs</h2>
-        <i class="bi bi-emoji-smile"></i>
-        {% for song in songs %}
-        <label> {{ song }} with energy {{ song.energy }}</label>
-        <audio controls>
-            <source src={{ MEDIA_URL }}{{ song.file }} type="audio/mpeg">
-            Your browser does not support the audio tag.
-        </audio><br><br>
-        {% endfor %}
-    {% endif %}
+    <style scoped>
+        #faces {
+            margin: auto;
+            padding: 70px 0;
+            border: 3px solid green;
+            text-align: center;
+            width: 70%;
+        }
+
+        #face-btn {
+            height: 125px;
+            width: 200px;
+            border-radius: 20px;
+            margin-left: 5%;
+            margin-right: 5%;
+        }
+
+        #emoji {
+            margin: auto;
+            text-align: center;
+            font-size: 70px;
+        }
+    </style>
 {% endblock %}
+

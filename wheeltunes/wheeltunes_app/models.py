@@ -10,6 +10,11 @@ class Song(models.Model):
     playable = models.BooleanField(default=False)
     
     def __str__(self):
-        return self.title
+        return f"{self.title} -> Energy: {self.energy} -> Tempo: {self.tempo} BPM -> Mood: {self.mood} -> url: {self.static_url}"
     
 
+class SensorData(models.Model):
+    heart_rate = models.IntegerField(default=40)
+    speed = models.IntegerField(default=0)
+    background_noise = models.IntegerField(default=20)
+    mood = models.CharField(max_length=100, default='')
