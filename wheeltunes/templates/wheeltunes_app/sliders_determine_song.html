@@ -9,20 +9,20 @@
         <div class="row">
             <div class="col">
                 <label for="customRange2" class="form-label">Speed (0-40mph)</label>
-                <input type="range" class="form-range" id="speed_input" min="0" max="40" name="speed" oninput="speed_output.value = speed_input.value">
-                <output for="customRange2" id="speed_output" class="form-label">20</output>
+                <input type="range" class="form-range" id="speed_input" min="0" max="40" name="speed" value="0" oninput="speed_output.value = speed_input.value">
+                <output for="customRange2" id="speed_output" class="form-label">0</output>
             </div>
 
             <div class="col">
                 <label for="customRange2" class="form-label">Heart Rate (40-150bpm)</label>
-                <input type="range" class="form-range" min="40" max="150" name="heart-rate" id="HR_input" oninput="HR_output.value = HR_input.value">
-                <output for="customRange2" id="HR_output" class="form-label">95</output>
+                <input type="range" class="form-range" min="40" max="150" name="heart-rate" id="HR_input" oninput="HR_output.value = HR_input.value" value="0">
+                <output for="customRange2" id="HR_output" class="form-label">40</output>
             </div>
 
             <div class="col">
                 <label for="customRange2" class="form-label">Background Noise (0-80db)</label>
-                <input type="range" class="form-range" min="0" max="80" name="background-noise" id="BN_input" oninput="BN_output.value = BN_input.value">
-                <output for="customRange2" id="BN_output" class="form-label">40</output>
+                <input type="range" class="form-range" min="0" max="80" name="background-noise" id="BN_input" oninput="BN_output.value = BN_input.value" value="0">
+                <output for="customRange2" id="BN_output" class="form-label">0</output>
             </div>
         </div>
 
