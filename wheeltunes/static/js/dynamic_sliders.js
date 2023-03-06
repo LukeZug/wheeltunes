@@ -3,6 +3,7 @@ $(document).ready(function() {
       var speed = $("#speed_input").val();
       var heart_rate = $("#HR_input").val();
       var noise = $("#BN_input").val();
+
       $.ajax({
         url: "/wheeltunes/sliders/",
         type: "POST",
@@ -37,6 +38,9 @@ $(document).ready(function() {
                   'onended': "playNextSong()"
                 }).appendTo(playlist);
             }
+
+            // Update the current playlist array with the new audio elements
+            currentPlaylist = playlist.find('audio');
         }
       });
     });

@@ -31,9 +31,11 @@
         </div>
 
         <div id="watch-screen">
+            <p class="now_playing mb-0">Now Playing</p>
+            <p class="now_playing" id="now_playing_song">nothing...</p>
             <a onclick="togglePlayPause('play')" href="#" id="playButton"><i class="bi bi-play-circle"></i></a>
             <a onclick="togglePlayPause('pause')" href="#" id="pauseButton" style="display: none;"><i class="bi bi-pause-circle"></i></a>
-            <a href="#" id="skipButton"><i class="bi bi-skip-end-fill"></i></a>
+            <a onclick="playNextSong()" href="#" id="skipButton"><i class="bi bi-skip-end-fill"></i></a>
         </div>
 
 
@@ -57,6 +59,10 @@
         .row{
             background-color: grey;
             border-radius: 15px;
+        }
+
+        .now_playing {
+            font-size: 0.8rem;
         }
 
         #playButton, #pauseButton, #skipButton {
