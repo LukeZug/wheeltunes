@@ -5,7 +5,6 @@ from wheeltunes_app.models import *
 from wheeltunes_app.forms import UploadSongForm
 
 
-# Create your views here.
 def index(request):
     if request.method =="POST":
         sensor = SensorData.objects.all().first()

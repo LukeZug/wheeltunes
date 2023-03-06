@@ -17,5 +17,32 @@
     {% endblock %}
 
     <script src="{% static 'js/dynamic_sliders.js' %}"></script>
+
+    <style>
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            background-image: url('../../static/images/arm.jpg');
+
+            /* Center and scale the image nicely */
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        #watch-screen{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            width: 150px;
+            padding: 70px 0;
+            text-align: center;
+        }
+    </style>
 </body>
 </html>
+
