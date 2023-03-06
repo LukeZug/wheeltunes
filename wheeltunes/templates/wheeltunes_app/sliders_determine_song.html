@@ -31,9 +31,8 @@
         </div>
 
         <div id="watch-screen">
-            <form>
-                <button type="submit" ><i class="bi bi-play-circle-fill"></i></button>
-            </form>
+            <a href="#" id="playButton"><i class="bi bi-play-circle"></i></a>
+            <a href="#" id="pauseButton" style="display: none;"><i class="bi bi-pause-circle"></i></a>
         </div>
 
         <div id="changes">
@@ -65,8 +64,10 @@
             border-radius: 15px;
         }
 
-        button{
-            font-size: 50px;
+        #playButton, #pauseButton {
+            font-size: 65px;
+            text-decoration: none;
+            color: white;
         }
 
     </style>
