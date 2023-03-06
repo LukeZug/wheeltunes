@@ -31,22 +31,17 @@
         </div>
 
         <div id="watch-screen">
-            <a href="#" id="playButton"><i class="bi bi-play-circle"></i></a>
-            <a href="#" id="pauseButton" style="display: none;"><i class="bi bi-pause-circle"></i></a>
+            <a onclick="togglePlayPause('play')" href="#" id="playButton"><i class="bi bi-play-circle"></i></a>
+            <a onclick="togglePlayPause('pause')" href="#" id="pauseButton" style="display: none;"><i class="bi bi-pause-circle"></i></a>
+            <a href="#" id="skipButton"><i class="bi bi-skip-end-fill"></i></a>
         </div>
 
-        <div id="changes">
-    <h2>Songs most suited to current state:</h2>
-    {% if sensor_data %}
-        <p>Current sensor data: <span id="hr">{{ sensor_data.heart_rate }}</span>bpm, <span id="speed_sensor">{{ sensor_data.speed }}</span>mph, <span id="bg_noise">{{ sensor_data.background_noise }}</span>db, {% if sensor_data.mood %}mood: {{ sensor_data.mood }}{% endif %}</p>
-        <p>Showing songs with tempo range <strong><span id="lower_offset">{{ lower_offset }}</span>bpm</strong> to <strong><span id="upper_offset">{{ upper_offset }}</span>bpm</strong></p>
-    {% endif %}
-    <ul id="playlist">
-    {% for song in playable_songs %}
-        <li>{{ song }}</li>
-    {% endfor %}
-    </ul>
-    </div>
+
+        <div id="playlist">
+        {% for song in playable_songs %}
+            <audio class="audio" id="audio_{{ song.id }}" src="{{ song.static_url }}" onplay="setNowPlaying('{{ song.title }} by {{ song.artist }}')" onended="playNextSong()"></audio>
+        {% endfor %}
+        </div>
     </div>
 
     <style>
@@ -64,7 +59,7 @@
             border-radius: 15px;
         }
 
-        #playButton, #pauseButton {
+        #playButton, #pauseButton, #skipButton {
             font-size: 65px;
             text-decoration: none;
             color: white;

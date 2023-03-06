@@ -29,7 +29,13 @@ $(document).ready(function() {
             playlist.empty();
 
             for (i=0; i < data['playable_songs'].length; i++) {
-                $("<li>").text(data['playable_songs'][i]).appendTo(playlist)
+                $("<audio>", {
+                  'class': 'audio',
+                  'id': 'audio_' + data['playable_songs'][i]['id'],
+                  'src': data['playable_songs'][i]['static_url'],
+                  'onplay': "setNowPlaying('" + data['playable_songs'][i]['title'] + " by " + data['playable_songs'][i]['artist'] + "')",
+                  'onended': "playNextSong()"
+                }).appendTo(playlist);
             }
         }
       });
