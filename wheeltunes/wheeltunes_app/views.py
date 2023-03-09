@@ -48,6 +48,7 @@ def sliders(request):
     else:
         # If we have sensor data (and songs), then pick the songs in a way where
         # songs are most aligned with the users' heart rate, speed, and background noise.
+        print(request)
         context_dict = generate_sliders_page()
         return render(request, 'wheeltunes_app/sliders_determine_song.html', context=context_dict)
 
@@ -89,8 +90,17 @@ def generate_sliders_page():
             mood=sensor_data.mood
         )
 
+    playable_songs = []
+    for song in songs_linked_to_heart_rate:
+        playable_song = {}
+        playable_song['title'] = song.title
+        playable_song['static_url'] = song.static_url
+        playable_song['artist'] = song.artist
+        playable_song['id'] = song.id
+        playable_songs.append(playable_song)
+
     return {
-        'playable_songs': [str(song) for song in list(songs_linked_to_heart_rate)],
+        'playable_songs': playable_songs,
         'sensor_data': sensor_data,
         'lower_offset': sensor_data.heart_rate - TEMPO_HEART_RATE_LOWER_OFFSET,
         'upper_offset': sensor_data.heart_rate + TEMPO_HEART_RATE_UPPER_OFFSET,

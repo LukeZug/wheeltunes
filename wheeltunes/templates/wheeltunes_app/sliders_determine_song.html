@@ -27,29 +27,24 @@
                     <output for="customRange2" id="BN_output" class="form-label">{%if sensor_data%}{{sensor_data.background_noise}}{%else%}0{%endif%}</output>
                 </div>
             </div>
-
-            <button type="submit" class="btn btn-primary">Submit</button>
         </form>
         </div>
 
         <div id="watch-screen">
-            <h4> #TO DO </h4>
-            A play/pause button, skip forwards/backwards and a save to playlist. Change mood?
-
+            <p class="now_playing mb-0">Now Playing</p>
+            <p class="now_playing" id="now_playing_song">nothing...</p>
+            <a onclick="playLastSong()" href="#" id="skipButton"><i class="bi bi-skip-start-fill"></i></a>
+            <a onclick="togglePlayPause('play')" href="#" id="playButton"><i class="bi bi-play-circle"></i></a>
+            <a onclick="togglePlayPause('pause')" href="#" id="pauseButton" style="display: none;"><i class="bi bi-pause-circle"></i></a>
+            <a onclick="playNextSong()" href="#" id="skipButton"><i class="bi bi-skip-end-fill"></i></a>
         </div>
 
-        <div id="changes">
-    <h2>Songs most suited to current state:</h2>
-    {% if sensor_data %}
-        <p>Current sensor data: <span id="hr">{{ sensor_data.heart_rate }}</span>bpm, <span id="speed_sensor">{{ sensor_data.speed }}</span>mph, <span id="bg_noise">{{ sensor_data.background_noise }}</span>db, {% if sensor_data.mood %}mood: {{ sensor_data.mood }}{% endif %}</p>
-        <p>Showing songs with tempo range <strong><span id="lower_offset">{{ lower_offset }}</span>bpm</strong> to <strong><span id="upper_offset">{{ upper_offset }}</span>bpm</strong></p>
-    {% endif %}
-    <ul id="playlist">
-    {% for song in playable_songs %}
-        <li>{{ song }}</li>
-    {% endfor %}
-    </ul>
-    </div>
+
+        <div id="playlist">
+        {% for song in playable_songs %}
+            <audio class="audio" id="audio_{{ song.id }}" src="{{ song.static_url }}" onplay="setNowPlaying('{{ song.title }} by {{ song.artist }}')" onended="playNextSong()"></audio>
+        {% endfor %}
+        </div>
     </div>
 
     <style>
@@ -60,6 +55,27 @@
         #changes{
             position: absolute;
             margin-top:500px;
+        }
+
+        .row{
+            background-color: grey;
+            border-radius: 15px;
+        }
+
+        .now_playing {
+            font-size: 0.8rem;
+        }
+
+        #playButton, #pauseButton, #skipButton {
+            font-size: 65px;
+            text-decoration: none;
+            color: white;
+        }
+
+        #skipButton {
+            font-size: 35px;
+            bottom: 10px;
+            position: relative;
         }
 
     </style>
