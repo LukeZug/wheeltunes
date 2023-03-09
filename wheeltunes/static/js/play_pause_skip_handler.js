@@ -45,14 +45,32 @@ function setNowPlaying(title) {
 
 function playNextSong() {
   // Skip button is pressed.
-  var updatedCurrentPlaylist = getAllCurrentSongs();
+  updatedCurrentPlaylist = getAllCurrentSongs();
+
+  console.log(updatedCurrentPlaylist);
+  console.log(currentPlaylist);
 
   // Stop the current song
   currentlyPlayingAudio.pause();
+  currentlyPlayingAudio.currentTime = 0;
 
-  if (updatedCurrentPlaylist.is(currentPlaylist)) {
+  var equal = true;
+  // Compare the length of the arrays
+  if (currentPlaylist.length === updatedCurrentPlaylist.length) {
+    // If the arrays are the same length, compare each element
+    var isEqual = true;
+    currentPlaylist.each(function(index) {
+      if (this !== updatedCurrentPlaylist[index]) {
+        equal = false
+      }
+    });
+  } else {
+    equal = false;
+  }
+
+  if (equal) {
     // Playlist/state has not changed.
-    currentPlaylistPosition ++;
+    currentPlaylistPosition = (currentPlaylistPosition + 1) % currentPlaylist.length;
     currentlyPlayingAudio = currentPlaylist[currentPlaylistPosition];
     currentlyPlayingAudio.play();
   } else {
@@ -65,4 +83,23 @@ function playNextSong() {
 
   playButton.style.display = 'none';
   pauseButton.style.display = 'inline-block';
+}
+
+function playLastSong() {
+  // If current song time is > 2s then skip to the start of the song.
+  if (currentlyPlayingAudio.currentTime > 2) {
+    currentlyPlayingAudio.currentTime = 0;
+  } else {
+    // Otherwise, skip to the previous song.
+    currentlyPlayingAudio.pause();
+    currentlyPlayingAudio.currentTime = 0;
+
+    currentPlaylistPosition = (currentPlaylistPosition - 1 + currentPlaylist.length) % currentPlaylist.length;
+    currentlyPlayingAudio = currentPlaylist[currentPlaylistPosition];
+    currentlyPlayingAudio.play();
+
+    playButton.style.display = 'none';
+    pauseButton.style.display = 'inline-block';
+  }
+
 }
