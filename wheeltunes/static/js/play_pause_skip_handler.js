@@ -75,10 +75,15 @@ function playNextSong() {
     currentlyPlayingAudio.play();
   } else {
     // The state has changed. The playlist is different. Start as if it were a new page load.
+    lastSong = currentlyPlayingAudio;
     currentlyPlayingAudio = null;
     currentPlaylist = getAllCurrentSongs();
     currentPlaylistPosition = 0;
     playSong();
+
+    if (currentlyPlayingAudio == lastSong) {
+      playNextSong();
+    }
   }
 
   playButton.style.display = 'none';
