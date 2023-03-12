@@ -47,9 +47,6 @@ function playNextSong() {
   // Skip button is pressed.
   updatedCurrentPlaylist = getAllCurrentSongs();
 
-  console.log(updatedCurrentPlaylist);
-  console.log(currentPlaylist);
-
   // Stop the current song
   currentlyPlayingAudio.pause();
   currentlyPlayingAudio.currentTime = 0;

@@ -30,7 +30,6 @@ $(document).ready(function() {
 
             // Don't remove the currently playing song from the DOM! or else...
             if (currentlyPlayingAudio) {
-              console.log("currently playing");
               var currentAudioId = currentlyPlayingAudio.id;
               playlist.children("audio").each(function() {
                 var audioId = $(this).attr("id");

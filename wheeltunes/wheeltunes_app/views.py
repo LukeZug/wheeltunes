@@ -48,7 +48,6 @@ def sliders(request):
     else:
         # If we have sensor data (and songs), then pick the songs in a way where
         # songs are most aligned with the users' heart rate, speed, and background noise.
-        print(request)
         context_dict = generate_sliders_page()
         return render(request, 'wheeltunes_app/sliders_determine_song.html', context=context_dict)
 
@@ -58,19 +57,19 @@ def choose_offsets(current_speed):
     # Lower speed => songs with tempo quite a bit lower than heart rate are allowed
     # Higher speed => songs with quite a bit higher tempo than HR are allowed
 
-    upper_offset = lower_offset = 10
+    upper_offset = lower_offset = 30
     if 0 <= current_speed <= 10:
         # Cycling up to 10mph -- despite HR, it's a slow cycle so allow for larger range of slower tempo songs.
-        lower_offser = 30
+        lower_offset = 40
     elif 10 < current_speed <= 20:
         # Cycling between 10 and 20mph, faster cycle so reduce number of slower songs played.
-        lower_offser = 10
+        lower_offset = 20
     else:
         # Cycling over 20mph -- very fast, so allow for a larger range of higher BPM songs.
-        upper_offset = 30
-        lower_offser = 10  # incase they got to this speed between updates
+        upper_offset = 300
+        lower_offset = 20  # incase they got to this speed between updates
 
-    return lower_offser, upper_offset
+    return lower_offset, upper_offset
 
 
 def generate_sliders_page():
