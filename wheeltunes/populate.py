@@ -423,19 +423,6 @@ def populate():
     fast_sad_songs()
     fast_middle_songs()
     fast_happy_songs()
-#     for i in range(NUM_OF_SONGS):
-#         create_mock_song(i)
-
-# def create_mock_song(i):
-#     Song.objects.get_or_create(
-#         title=f"Song number {i+1}",
-#         artist=f"Artist {i+1}",
-#         static_url="/static/songs/UndercoverMartyn.mp3",
-#         energy=random.randint(0, 100),
-#         tempo=random.randint(50,150),
-#         mood=random.choice(['sad', 'middle', 'happy']),
-#         playable=True
-#     )
 
 if __name__ == "__main__":
     populate()
