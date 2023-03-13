@@ -4,10 +4,12 @@ var currentPlaylistPosition = 0;
 
 function togglePlayPause(action) {
     if (action === 'play') {
+      document.getElementById("play_sound").play();
       playButton.style.display = 'none';
       pauseButton.style.display = 'inline-block';
       playSong();
     } else if (action === 'pause') {
+      document.getElementById("pause_sound").play();
       playButton.style.display = 'inline-block';
       pauseButton.style.display = 'none';
       pauseSong();
@@ -44,6 +46,9 @@ function setNowPlaying(title) {
 }
 
 function playNextSong() {
+  // Play skip sound
+  document.getElementById("play_sound").play();
+
   // Skip button is pressed.
   updatedCurrentPlaylist = getAllCurrentSongs();
 
@@ -88,6 +93,8 @@ function playNextSong() {
 }
 
 function playLastSong() {
+  document.getElementById("pause_sound").play();
+
   // If current song time is > 2s then skip to the start of the song.
   if (currentlyPlayingAudio.currentTime > 2) {
     currentlyPlayingAudio.currentTime = 0;
@@ -104,4 +111,12 @@ function playLastSong() {
     pauseButton.style.display = 'inline-block';
   }
 
+}
+
+function playPauseAction() {
+  if (currentlyPlayingAudio.paused) {
+    togglePlayPause('play');
+  } else {
+    togglePlayPause('pause');
+  }
 }
