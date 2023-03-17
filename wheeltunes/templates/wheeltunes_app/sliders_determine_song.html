@@ -11,39 +11,24 @@
                     <h1>Mocked sensor input:</h1>
 
                     <div class="col">
-                        <label for="customRange2" class="form-label">Speed (0-40mph)</label>
+                        <label for="customRange2" class="form-label">Speed</label>
                         <input type="range" class="form-range" id="speed_input" min="0" max="40" name="speed" value="{%if sensor_data%}{{sensor_data.speed}}{%else%}0{%endif%}" oninput="speed_output.value = speed_input.value">
                         <output for="customRange2" id="speed_output" class="form-label">{%if sensor_data%}{{sensor_data.speed}}{%else%}0{%endif%}</output>
                     </div>
 
                     <div class="col">
-                        <label for="customRange2" class="form-label">Heart Rate (40-150bpm)</label>
+                        <label for="customRange2" class="form-label">Heart Rate</label>
                         <input type="range" class="form-range" min="40" max="150" name="heart-rate" id="HR_input" oninput="HR_output.value = HR_input.value" value="{%if sensor_data%}{{sensor_data.heart_rate}}{%else%}0{%endif%}">
                         <output for="customRange2" id="HR_output" class="form-label">{%if sensor_data%}{{sensor_data.heart_rate}}{%else%}40{%endif%}</output>
                     </div>
 
                     <div class="col">
-                        <label for="customRange2" class="form-label">Background Noise (0-80db)</label>
+                        <label for="customRange2" class="form-label">Background Noise</label>
                         <input type="range" class="form-range" min="0" max="80" name="background-noise" id="BN_input" oninput="BN_output.value = BN_input.value" value="{%if sensor_data%}{{sensor_data.background_noise}}{%else%}0{%endif%}">
                         <output for="customRange2" id="BN_output" class="form-label">{%if sensor_data%}{{sensor_data.background_noise}}{%else%}0{%endif%}</output>
                     </div>
                 </div>
             </form>
-
-            <div class="row text-center">
-                <audio src="{% static 'mp3/play.mp3' %}" id="play_sound"></audio>
-                <audio src="{% static 'mp3/pause.mp3' %}" id="pause_sound"></audio>
-
-                <div class="col">
-                    <a class="btn btn-dark" onclick="playPauseAction()">Simulate hand placed over watch (pause/play)</a>
-                </div>
-                <div class="col">
-                    <a class="btn btn-dark" onclick="playNextSong()">Simulate hand swipe RIGHT over watch (skip)</a>
-                </div>
-                <div class="col">
-                    <a class="btn btn-dark" onclick="playLastSong()">Simulate hand swipe LEFT over watch (back)</a>
-                </div>
-            </div>
         </div>
 
         <div id="watch-screen">
@@ -55,6 +40,21 @@
             <a onclick="playNextSong()" href="#" id="skipButton"><i class="bi bi-skip-end-fill"></i></a>
         </div>
 
+        <div class="watch-actions">
+            <audio src="{% static 'mp3/play.mp3' %}" id="play_sound"></audio>
+            <audio src="{% static 'mp3/pause.mp3' %}" id="pause_sound"></audio>
+
+            <div class="col">
+                <a class="btn btn-dark" onclick="playPauseAction()">Simulate hand placed over watch (pause/play)</a>
+            </div>
+            <div class="col">
+                <a class="btn btn-dark" onclick="playNextSong()">Simulate hand swipe RIGHT over watch (skip)</a>
+            </div>
+            <div class="col">
+                <a class="btn btn-dark" onclick="playLastSong()">Simulate hand swipe LEFT over watch (back)</a>
+            </div>
+        </div>
+
 
         <div id="playlist">
         {% for song in playable_songs %}
@@ -64,6 +64,15 @@
     </div>
 
     <style>
+
+        .watch-actions{
+            translate: 0px 250px;
+        }
+
+        .watch-actions .col {
+            margin: 10px;
+        }
+
         #mockers{
             padding-top: 20px;
         }
